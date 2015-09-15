@@ -1,0 +1,39 @@
+byexample_demo_userrest:
+    type: rest
+    resource: ByExample\DemoBundle\Controller\UserRestController
+
+byexample_genres:
+    resource: ByExample\DemoBundle\Controller\GenreRestController
+    type: rest
+
+byexample_items:
+    resource: ByExample\DemoBundle\Controller\ItemRestController
+    type: rest
+
+byexample_artistes:
+    resource: ByExample\DemoBundle\Controller\ArtisteRestController
+    type: rest
+
+byexample_playlists:
+    resource: ByExample\DemoBundle\Controller\PlaylistRestController
+    parent: byexample_demo_userrest
+    type: rest
+byexample_sessions:
+    resource: ByExample\DemoBundle\Controller\SessionRestController
+    parent: byexample_demo_userrest
+    type: 
+byexample_ecoutes:
+    resource: ByExample\DemoBundle\Controller\EcouteRestController
+    parent: byexample_demo_userrest
+    type: rest
+byexample_interactions:
+    resource: ByExample\DemoBundle\Controller\InteractionRestController
+    parent: byexample_demo_userrest
+    type: rest
+byexample_notes:
+    resource: ByExample\DemoBundle\Controller\NoteRestController
+    type: rest
+byexample_actions:
+    resource: ByExample\DemoBundle\Controller\ActionRestController
+    parent: byexample_demo_userrest
+    type: rest

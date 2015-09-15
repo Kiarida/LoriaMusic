@@ -1,0 +1,11 @@
+byexample_algorithm:
+    resource: ByExample\RecommandationsBundle\Controller\AlgorithmController
+    type: rest
+
+byexample_test:
+    resource: ByExample\RecommandationsBundle\Controller\TestController
+    type: rest
+
+byexample_recommandation:
+    resource: ByExample\RecommandationsBundle\Controller\RecommandationController
+    type: rest

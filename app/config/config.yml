@@ -1,0 +1,157 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+
+framework:
+    #esi:             ~
+    translator:      { fallback: %locale% }
+    secret:          %secret%
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: %kernel.debug%
+    form:            true
+    csrf_protection: true
+    validation:      { enable_annotations: true }
+    templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
+    default_locale:  %locale%
+    session:         ~
+
+# Twig Configuration
+twig:
+    debug:            %kernel.debug%
+    strict_variables: %kernel.debug%
+    exception_controller: 'FOS\RestBundle\Controller\ExceptionController::showAction'
+
+# Assetic Configuration
+assetic:
+    debug:          %kernel.debug%
+    use_controller: false
+    bundles:        [ ByExampleDemoBundle]
+    #java: /usr/bin/java
+    filters:
+        cssrewrite: ~
+        #closure:
+        #    jar: %kernel.root_dir%/Resources/java/compiler.jar
+        #yui_css:
+        #    jar: %kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   %database_driver%
+        host:     %database_host%
+        port:     %database_port%
+        dbname:   %database_name%
+        user:     %database_user%
+        password: %database_password%
+        charset:  UTF8
+
+    orm:
+        auto_generate_proxy_classes: %kernel.debug%
+        auto_mapping: true
+        mappings:
+            translatable:
+                type: annotation
+                alias: Gedmo
+                prefix: Gedmo\Translatable\Entity
+                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
+            loggable:
+                type: annotation
+                alias: Gedmo
+                prefix: Gedmo\Loggable\Entity
+                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Loggable/Entity"
+            tree:
+                type: annotation
+                alias: Gedmo
+                prefix: Gedmo\Tree\Entity
+                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: %mailer_transport%
+    host:      %mailer_host%
+    username:  %mailer_user%
+    password:  %mailer_password%
+    spool:     { type: memory }
+
+jms_security_extra:
+    secure_all_services: false
+    enable_iddqd_attribute: false
+    expressions: true
+
+jms_serializer:
+    metadata:
+        cache: file
+        debug: "%kernel.debug%"
+        file_cache:
+            dir: "%kernel.cache_dir%/serializer"
+        auto_detection: true
+
+sensio_framework_extra:
+    router:  { annotations: true }
+    request: { converters: true }
+    view:    { annotations: false }  # More info at https://github.com/FriendsOfSymfony/FOSRestBundle/issues/95
+    cache:   { annotations: true }
+
+jms_aop:
+    cache_dir: %kernel.cache_dir%/jms_aop
+
+fos_user:
+    db_driver: orm
+    firewall_name: wsse_secured #fos_secured
+    user_class: ByExample\DemoBundle\Entity\User
+
+fos_rest:
+    view:
+        view_response_listener: true
+        failed_validation: HTTP_BAD_REQUEST
+        default_engine: php
+        formats:
+            json: true
+            xml: true
+            rss: false
+            html: false
+    format_listener:
+        rules:
+             - { path: '^/', priorities: ['json', 'xml'], prefer_extension: true }
+    body_listener:
+        decoders:
+            json: fos_rest.decoder.json
+    param_fetcher_listener: true
+    allowed_methods_listener: true
+
+mopa_wsse_authentication:
+    provider_class: Mopa\Bundle\WSSEAuthenticationBundle\Security\Authentication\Provider\WsseAuthenticationProvider
+    listener_class: Mopa\Bundle\WSSEAuthenticationBundle\Security\Firewall\WsseListener
+    factory_class: Mopa\Bundle\WSSEAuthenticationBundle\Security\Factory\WsseFactory
+
+stof_doctrine_extensions:
+    default_locale: %locale%
+    orm:
+        default:
+            translatable: true
+            timestampable: true
+            sluggable: true
+            loggable: true
+            tree: true
+nelmio_cors:
+    defaults:
+        allow_credentials: true
+        allow_origin: []
+        allow_headers: []
+        allow_methods: []
+        expose_headers: []
+        max_age: 0
+        hosts: []
+    paths:
+        '^/api/':
+            allow_origin: ['*']
+            allow_headers: ['X-Custom-Auth']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
+            max_age: 3600
+        '^/':
+            allow_origin: ['*']
+            allow_headers: ['X-Custom-Auth']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
+            max_age: 3600
+            hosts: ['^api\.']

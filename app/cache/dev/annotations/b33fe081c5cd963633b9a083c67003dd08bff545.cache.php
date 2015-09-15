@@ -1,0 +1,1 @@
+<?php return unserialize('a:2:{i:0;O:44:"FOS\\RestBundle\\Controller\\Annotations\\Prefix":1:{s:5:"value";s:9:"/security";}i:1;O:48:"FOS\\RestBundle\\Controller\\Annotations\\NamePrefix":1:{s:5:"value";s:28:"byexample_demo_securityrest_";}}');

@@ -1,0 +1,7 @@
+parameters:
+#    by_example_recommandations.example.class: ByExample\RecommandationsBundle\Example
+
+services:
+#    by_example_recommandations.example:
+#        class: %by_example_recommandations.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
