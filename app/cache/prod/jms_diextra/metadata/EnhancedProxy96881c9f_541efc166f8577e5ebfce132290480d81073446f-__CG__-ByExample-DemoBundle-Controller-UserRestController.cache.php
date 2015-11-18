@@ -1,1 +1,0 @@
-<?php return unserialize('C:21:"Metadata\\NullMetadata":186:{a:5:{i:0;s:120:"EnhancedProxy96881c9f_541efc166f8577e5ebfce132290480d81073446f\\__CG__\\ByExample\\DemoBundle\\Controller\\UserRestController";i:1;a:0:{}i:2;a:0:{}i:3;a:0:{}i:4;i:1438345284;}}');
