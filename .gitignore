@@ -2,4 +2,6 @@ vendor
 app/config/parameters.yml
 app/cache
 app/logs
+init_permissions.sh
+composer.lock
 composer.phar
