@@ -5,3 +5,4 @@ app/logs
 init_permissions.sh
 composer.lock
 composer.phar
+mysql.sock
