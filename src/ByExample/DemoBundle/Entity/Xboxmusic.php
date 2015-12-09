@@ -126,10 +126,11 @@ class Xboxmusic {
         $fields = array(
                     'RelyingParty' => "http://auth.xboxlive.com",
                     'TokenType' => 'JWT',
-                    'Properties' => $fieldsProp,
+                    //'Properties' => $fieldsProp,
                 );
         
 
+        $fields_string = $url . "?";
         //url-ify the data for the POST
         foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
         rtrim($fields_string, '&');
@@ -161,10 +162,11 @@ class Xboxmusic {
         $fields = array(
                     'RelyingParty' => "http://music.xboxlive.com",
                     'TokenType' => 'JWT',
-                    'Properties' => $fieldsProp,
+                    //'Properties' => $fieldsProp,
                 );
         
 
+        $fields_string = $url . "?";
         //url-ify the data for the POST
         foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
         rtrim($fields_string, '&');
@@ -183,7 +185,6 @@ class Xboxmusic {
         $result = curl_exec($ch);
         //return $fields;
         return $result;
-        
       }
 
       public function streaming($string, $token, $uhs, $xtoken){

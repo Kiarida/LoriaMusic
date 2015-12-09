@@ -50,8 +50,8 @@ class SecurityController extends Controller
         $username = $request->get('_username');
         $password = $request->get('_password');
 
-        //$csrfToken = $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate');
-        //$data = array('csrf_token' => $csrfToken,);
+        $csrfToken = $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate');
+        $data = array('csrf_token' => $csrfToken);
 
         $um = $this->get('fos_user.user_manager');
         $user = $um->findUserByUsernameOrEmail($username);
@@ -77,15 +77,22 @@ class SecurityController extends Controller
         $auth = 'WSSE profile="'.$username.'"';
         $view->setHeader("Authorization", 'WSSE profile="UsernameToken"');
         $view->setHeader("X-WSSE", "UsernameToken Username=\"{$username}\", PasswordDigest=\"{$passwordDigest}\", Nonce=\"{$nonceHigh}\", Created=\"{$created}\"");
-        if($utilisateur){
-            $data = array('WSSE' => $header, "auth" => $auth, "email" => $user->getEmail(), "country"=> $utilisateur->getPays(), "id"=>$user->getId(), "username" => $user->getUsername(), "role" => $user->getRoles());
+        
+        $newData = array(
+          'csrf_token' => $data['csrf_token'], 
+          'WSSE' => $header, 
+          'auth' => $auth, 
+          'email' => $user->getEmail(), 
+          'id' => $user->getId(), 
+          'username' => $user->getUsername(), 
+          // 'role' => $user->getRoles()
+        );
 
+        if($utilisateur) {
+            $newData['country'] =$utilisateur->getPays();
         }
-        else{
-            $data = array('WSSE' => $header, "auth" => $auth, "email" => $user->getEmail(), "id"=>$user->getId(), "username" => $user->getUsername(), "role" => $user->getRoles());
 
-        }
-        $view->setStatusCode(200)->setData($data);
+        $view->setStatusCode(200)->setData($newData);
         return $view;
     }
 

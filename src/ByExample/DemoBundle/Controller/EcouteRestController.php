@@ -48,7 +48,7 @@ class EcouteRestController extends Controller{
         $limit = $this->container->getParameter('ecoutes_return');
 
         $ecoutes=$repo->findEcoutesByUser($id, $limit);
-        if ($ecoutes) {
+        if ($ecoutes !== null) {
             $view->setStatusCode(200)->setData($ecoutes);
         } else {
             $view->setStatusCode(404);

@@ -68,7 +68,7 @@ class SessionRestController extends Controller{
         $limit = $this->container->getParameter('sessions_return');
 
         $sessions=$repo->findSessionsByUser($id, $limit);
-        if ($sessions) {
+        if ($sessions !== null) {
             $view->setStatusCode(200)->setData($sessions);
         } else {
             $view->setStatusCode(404);

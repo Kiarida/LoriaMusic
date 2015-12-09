@@ -188,7 +188,8 @@ class UserRestController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repo=$em->getRepository('ByExampleDemoBundle:Playlist');
         $idplaylist=$repo->findPlaylistByUser($id);
-        if($idplaylist) {
+
+        if($idplaylist !== null) {
             $view->setStatusCode(200)->setData($idplaylist);
         } else {
             $view->setStatusCode(404);
