@@ -101,7 +101,7 @@ class ItemRestController extends Controller
     $items = $repo->findItemsByPopularity($days, $limit);
 
 
-    if ($items) {
+    if ($items !== null) {
             $view->setStatusCode(200)->setData($items);
         } else {
             $view->setStatusCode(404);

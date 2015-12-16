@@ -122,7 +122,7 @@ class UserRestController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repo=$em->getRepository('ByExampleDemoBundle:Note');
         $notes=$repo->findNoteByItemAndUser($id_item,$iduser);
-        if ($notes){
+        if ($notes !== null){
             $notes["idItem"] = intval($id_item);
             $view->setData($notes);
             $view->setStatusCode(200);
