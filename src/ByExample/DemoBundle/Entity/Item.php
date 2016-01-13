@@ -31,6 +31,13 @@ class Item
     /**
     * @var string
     *
+    * @ORM\Column(name="idLastFm", type="string", length=255, nullable=true)
+    */
+    private $idLastFm;
+
+    /**
+    * @var string
+    *
     * @ORM\Column(name="titre", type="string", length=255, nullable=false)
     */
     private $titre;
