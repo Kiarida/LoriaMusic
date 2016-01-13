@@ -36,21 +36,21 @@ class Musique
     /**
      * @var decimal
      *
-     * @ORM\Column(name="energy", type="decimal", precision=5, scale=6, nullable=false)
+     * @ORM\Column(name="energy", type="decimal", precision=6, scale=5, nullable=false)
      */
     private $energy;
 
     /**
      * @var decimal
      *
-     * @ORM\Column(name="hotttness", type="decimal", precision=5, scale=6, nullable=false)
+     * @ORM\Column(name="hotttness", type="decimal", precision=6, scale=5, nullable=false)
      */
     private $hotttness;
 
     /**
      * @var decimal
      *
-     * @ORM\Column(name="danceability", type="decimal", precision=5, scale=6, nullable=false)
+     * @ORM\Column(name="danceability", type="decimal", precision=6, scale=5, nullable=false)
      */
     private $danceability;
 

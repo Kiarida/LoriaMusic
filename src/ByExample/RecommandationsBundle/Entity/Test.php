@@ -14,70 +14,64 @@ use ByExample\DemoBundle\Entity\Utilisateur;
 class Test
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    * @var integer
+    *
+    * @ORM\Column(name="id", type="integer", nullable=false)
+    * @ORM\Id
+    * @ORM\GeneratedValue(strategy="IDENTITY")
+    */
     private $id;
 
-
-     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="dateDebut", type="datetime", nullable=false)
-     */
+    /**
+    * @var \DateTime
+    *
+    * @ORM\Column(name="dateDebut", type="datetime", nullable=false)
+    */
     private $datedebut;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="dateFin", type="datetime", nullable=true)
-     */
+    * @var \DateTime
+    *
+    * @ORM\Column(name="dateFin", type="datetime", nullable=true)
+    */
     private $datefin;
 
-      /**
-     * @var string
-     *
-     * @ORM\Column(name="label", type="string", length=25, nullable=true)
-     */
+    /**
+    * @var string
+    *
+    * @ORM\Column(name="label", type="string", length=25, nullable=true)
+    */
     private $label;
 
-     /**
-     * @var string
-     *
-     * @ORM\Column(name="mode", type="string", length=25, nullable=true)
-     */
+    /**
+    * @var string
+    *
+    * @ORM\Column(name="mode", type="string", length=25, nullable=true)
+    */
     private $mode;
 
-     /**
-     * @var integer
-     *
-     * @ORM\Column(name="groups", type="integer", nullable=false)
-     */
+    /**
+    * @var integer
+    *
+    * @ORM\Column(name="groups", type="integer", nullable=false)
+    */
     private $groups;
 
+    /**
+    * @var \Doctrine\Common\Collections\Collection
+    *
+    * @ORM\OneToMany(targetEntity="Group", mappedBy="idtest")
+    *
+    */
+    private $idgroup;
 
-      /**
-      * @var \Doctrine\Common\Collections\Collection
-      *
-      * @ORM\OneToMany(targetEntity="Group", mappedBy="idtest")
-      *
-      */
-      private $idgroup;
-
-        /**
-      * @var \Doctrine\Common\Collections\Collection
-      *
-      * @ORM\OneToMany(targetEntity="Ordre", mappedBy="idtest")
-      *
-      */
-      private $idordre;
-
-
-
-
+    /**
+    * @var \Doctrine\Common\Collections\Collection
+    *
+    * @ORM\OneToMany(targetEntity="Ordre", mappedBy="idtest")
+    *
+    */
+    private $idordre;
 
     /**
      * Get id
@@ -89,7 +83,6 @@ class Test
         return $this->id;
     }
 
-
     /**
      * Get label
      *
@@ -98,7 +91,6 @@ class Test
     public function getLabel(){
         return $this->label;
     }
-
 
     /**
      * Set label
@@ -110,12 +102,12 @@ class Test
         $this->label = $label;
     }
 
-     /**
-     * Add idgroup
-     *
-     * @param \ByExample\RecommandationsBundle\Entity\Group $idgroup
-     * @return Test
-     */
+    /**
+    * Add idgroup
+    *
+    * @param \ByExample\RecommandationsBundle\Entity\Group $idgroup
+    * @return Test
+    */
     public function addIdgroup(\ByExample\RecommandationsBundle\Entity\Group $idgroup)
     {
         $this->idgroup[] = $idgroup;
@@ -142,7 +134,6 @@ class Test
         return $this->idgroup;
     }
 
-
     /**
      * Get mode
      *
@@ -151,7 +142,6 @@ class Test
     public function getMode(){
         return $this->mode;
     }
-
 
     /**
      * Set mode
@@ -163,7 +153,6 @@ class Test
         $this->mode = $mode;
     }
 
-
     /**
      * Get groups
      *
@@ -172,7 +161,6 @@ class Test
     public function getGroups(){
         return $this->groups;
     }
-
 
     /**
      * Set groups
@@ -229,7 +217,4 @@ class Test
     {
         return $this->datefin;
     }
-
-
-
 }

@@ -50,7 +50,6 @@ class Genre
         $this->iditem = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
-
     /**
      * Get id
      *
@@ -117,7 +116,6 @@ class Genre
         return $this->idartiste;
     }
 
-
     /**
      * Get urlCover
      *
@@ -140,8 +138,4 @@ class Genre
     
         return $this;
     }
-
-
-
-
 }

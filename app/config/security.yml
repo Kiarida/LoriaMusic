@@ -16,7 +16,7 @@ security:
 #            anonymous:    true
 
         wsse_secured:
-            pattern:   ^/api/.*
+            pattern:   ^/projetindus/.*
             stateless:    true
             wsse:
                 nonce_dir: null

@@ -56,43 +56,35 @@ class Artiste
      */
     private $urlCover;
 
-       /**
-     * @var integer
-     *
-     * @ORM\Column(name="idEcho", type="integer", nullable=false)
-     */
+    /**
+    * @var integer
+    *
+    * @ORM\Column(name="idEcho", type="integer", nullable=false)
+    */
     private $idecho;
 
-   /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Artiste", inversedBy="idartiste", fetch="EXTRA_LAZY")
-     * @ORM\JoinTable(name="artistesimilaire",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="idArtiste", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="idSim", referencedColumnName="id")
-     *   }
-     * )
-     */
+    /**
+    * @var \Doctrine\Common\Collections\Collection
+    *
+    * @ORM\ManyToMany(targetEntity="Artiste", fetch="EXTRA_LAZY")
+    * @ORM\JoinTable(name="artistesimilaire",
+    *   joinColumns={
+    *     @ORM\JoinColumn(name="idArtiste", referencedColumnName="id")
+    *   },
+    *   inverseJoinColumns={
+    *     @ORM\JoinColumn(name="idSim", referencedColumnName="id")
+    *   }
+    * )
+    */
     private $idartistesim;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Genre", inversedBy="idartiste", fetch="EXTRA_LAZY")
-     * @ORM\JoinTable(name="artistegenre",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="idArtiste", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="idGenre", referencedColumnName="id")
-     *   }
-     * )
+     * 
      */
     private $idgenre;
-
 
     /**
      * Constructor
@@ -102,7 +94,6 @@ class Artiste
         $this->iditem = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idtag = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 
     /**
      * Get id
@@ -249,7 +240,6 @@ class Artiste
         return $this->idtag;
     }
 
-
     /**
      * Set idecho
      *
@@ -272,7 +262,6 @@ class Artiste
     {
         return $this->idecho;
     }
-
 
     /**
      * Add idgenre

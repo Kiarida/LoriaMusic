@@ -9,31 +9,32 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class NoteTagItem
 {
-
     /**
      * @var decimal
      *
      * @ORM\Column(name="note", type="decimal", precision=5, scale=2, nullable=false)
      */
     private $note;
+    
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\Id @ORM\ManyToOne(targetEntity="Item")
-     * @ORM\JoinColumn(name="idItem", referencedColumnName="id")
-     **/
+    * @var \Doctrine\Common\Collections\Collection
+    *
+    * @ORM\Id @ORM\ManyToOne(targetEntity="Item", inversedBy="idtag")
+    * @ORM\JoinColumn(name="idItem", referencedColumnName="id")
+    */
     private $iditem;
+    
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\Id @ORM\ManyToOne(targetEntity="Tag")
-     * @ORM\JoinColumn(name="idTag", referencedColumnName="id")
-     **/
+    * @var \Doctrine\Common\Collections\Collection
+    *
+    * @ORM\Id @ORM\ManyToOne(targetEntity="Tag", inversedBy="idnotetagitem")
+    * @ORM\JoinColumn(name="idTag", referencedColumnName="id")
+    */
     private $idtag;
 
     /**
-     * Constructor
-     */
+    * Constructor
+    */
     public function __construct()
     {
         $this->iditem = new \Doctrine\Common\Collections\ArrayCollection();
@@ -41,42 +42,44 @@ class NoteTagItem
     }
 
     /**
-     * Get id
-     *
-     * @return integer
-     */
+    * Get id
+    *
+    * @return integer
+    */
     public function getId()
     {
         return $this->id;
     }
+
     /**
-     * Set note
-     *
-     * @param string $note
-     * @return NoteTagItem
-     */
+    * Set note
+    *
+    * @param string $note
+    * @return NoteTagItem
+    */
     public function setNote($note)
     {
         $this->note = $note;
 
         return $this;
     }
+
     /**
-     * Get note
-     *
-     * @return string
-     */
+    * Get note
+    *
+    * @return string
+    */
     public function getNote()
     {
         return $this->note;
     }
 
     /**
-     * Set iditem
-     *
-     * @param string $iditem
-     * @return NoteTagItem
-     */
+    * Set iditem
+    *
+    * @param string $iditem
+    * @return NoteTagItem
+    */
     public function setIditem($iditem)
     {
         $this->iditem = $iditem;
@@ -85,16 +88,15 @@ class NoteTagItem
     }
 
     /**
-     * Set idtag
-     *
-     * @param string $idtag
-     * @return NoteTagItem
-     */
+    * Set idtag
+    *
+    * @param string $idtag
+    * @return NoteTagItem
+    */
     public function setIdtag($idtag)
     {
         $this->idtag = $idtag;
 
         return $this;
     }
-
 }

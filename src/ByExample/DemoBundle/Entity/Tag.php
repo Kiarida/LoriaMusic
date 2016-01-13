@@ -5,67 +5,66 @@ namespace ByExample\DemoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Tag
- *
- * @ORM\Table(name="tag")
- * @ORM\Entity
- * @ORM\Entity(repositoryClass="ByExample\DemoBundle\Repository\TagRepository")
- */
+* Tag
+*
+* @ORM\Table(name="tag")
+* @ORM\Entity
+* @ORM\Entity(repositoryClass="ByExample\DemoBundle\Repository\TagRepository")
+*/
 class Tag
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    * @var integer
+    *
+    * @ORM\Column(name="id", type="integer", nullable=false)
+    * @ORM\Id
+    * @ORM\GeneratedValue(strategy="IDENTITY")
+    */
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="libelle", type="string", length=25, nullable=false)
-     */
+    * @var string
+    *
+    * @ORM\Column(name="libelle", type="string", length=25, nullable=false)
+    */
     private $libelle;
 
-
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Artiste", inversedBy="idtag")
-     * @ORM\JoinTable(name="tagartiste",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="idTag", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="idArtiste", referencedColumnName="id")
-     *   }
-     * )
-     */
+    * @var \Doctrine\Common\Collections\Collection
+    *
+    * @ORM\ManyToMany(targetEntity="Artiste", inversedBy="idtag")
+    * @ORM\JoinTable(name="tagartiste",
+    *   joinColumns={
+    *     @ORM\JoinColumn(name="idTag", referencedColumnName="id")
+    *   },
+    *   inverseJoinColumns={
+    *     @ORM\JoinColumn(name="idArtiste", referencedColumnName="id")
+    *   }
+    * )
+    */
     private $idartiste;
 
     /**
-      * @var \Doctrine\Common\Collections\Collection
-      *
-      * @ORM\OneToMany(targetEntity="NoteTagItem", mappedBy="idtag")
-      *
-      */
-     private $idnotetagitem;
+    * @var \Doctrine\Common\Collections\Collection
+    *
+    * @ORM\OneToMany(targetEntity="NoteTagItem", mappedBy="idtag")
+    *
+    */
+    private $idnotetagitem;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Playlist", inversedBy="idtag")
-     * @ORM\JoinTable(name="tagplaylist",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="idTag", referencedColumnName="id", onDelete="CASCADE")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="idPlaylist", referencedColumnName="id", onDelete="CASCADE")
-     *   }
-     * )
-     */
+    * @var \Doctrine\Common\Collections\Collection
+    *
+    * @ORM\ManyToMany(targetEntity="Playlist", inversedBy="idtag")
+    * @ORM\JoinTable(name="tagplaylist",
+    *   joinColumns={
+    *     @ORM\JoinColumn(name="idTag", referencedColumnName="id", onDelete="CASCADE")
+    *   },
+    *   inverseJoinColumns={
+    *     @ORM\JoinColumn(name="idPlaylist", referencedColumnName="id", onDelete="CASCADE")
+    *   }
+    * )
+    */
     private $idplaylist;
 
     /**

@@ -13,7 +13,6 @@ use ByExample\DemoBundle\Entity\Utilisateur;
  */
 class Group
 {
-
     /**
      * @var integer
      *
@@ -23,39 +22,32 @@ class Group
      */
     private $id;
 
-
-
-
-  
-
-     /**
-     * @var ByExample\DemoBundle\Entity\Utilisateur
-     *
-     * @ORM\ManyToMany(targetEntity="ByExample\DemoBundle\Entity\Utilisateur", inversedBy="idgroup")
-     * @ORM\JoinTable(name="groupeutilisateur",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="idGroupe", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="idUtilisateur", referencedColumnName="id")
-     *   }
-     * )
-     */
+    /**
+    * @var ByExample\DemoBundle\Entity\Utilisateur
+    *
+    * @ORM\ManyToMany(targetEntity="ByExample\DemoBundle\Entity\Utilisateur", inversedBy="idgroup")
+    * @ORM\JoinTable(name="groupeutilisateur",
+    *   joinColumns={
+    *     @ORM\JoinColumn(name="idGroupe", referencedColumnName="id")
+    *   },
+    *   inverseJoinColumns={
+    *     @ORM\JoinColumn(name="idUtilisateur", referencedColumnName="id")
+    *   }
+    * )
+    */
     private $idutilisateur;
 
-
-
-      /**
-     * @var integer
-     *
-     * @ORM\Column(name="numero", type="string", length=25, nullable=false)
-     */
+    /**
+    * @var integer
+    *
+    * @ORM\Column(name="numero", type="string", length=25, nullable=false)
+    */
     private $numero;
 
      /**
      * @var \Test
      *
-     * @ORM\ManyToOne(targetEntity="Test", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Test", inversedBy="idgroup", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idTest", referencedColumnName="id")
      * })
