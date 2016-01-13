@@ -59,8 +59,9 @@ class EcouteRepository extends EntityRepository{
         ORDER BY e.id DESC')
 	    ->setParameter("user",$id_user)
 	    ->setMaxResults(1);
-	    $items=$query->getResult(Query::HYDRATE_OBJECT);
-	    return $items[0];
+	    
+	    $item = $query->getOneOrNullResult(Query::HYDRATE_OBJECT);
+	    return $item;
 	}
 
 	public function findLastEcouteBySession($id_session){
@@ -71,8 +72,9 @@ class EcouteRepository extends EntityRepository{
         ORDER BY e.id DESC')
 	    ->setParameter("session",$id_session)
 	    ->setMaxResults(1);
-	    $items=$query->getResult(Query::HYDRATE_OBJECT);
-	    return $items[0];
+	    
+	    $item = $query->getOneOrNullResult(Query::HYDRATE_OBJECT);
+	    return $item;
 	}
 
 	public function findLastEcouteLightBySession($id_session){
@@ -83,7 +85,8 @@ class EcouteRepository extends EntityRepository{
         ORDER BY e.id DESC')
 	    ->setParameter("session",$id_session)
 	    ->setMaxResults(1);
-	    $items=$query->getResult(Query::HYDRATE_OBJECT);
-	    return $items[0];
+
+	    $item = $query->getOneOrNullResult(Query::HYDRATE_OBJECT);
+	    return $items;
 	}
 }

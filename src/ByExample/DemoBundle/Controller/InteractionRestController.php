@@ -40,29 +40,27 @@ class InteractionRestController extends Controller{
     * @return FOSView
    */
 
-  public function addInteractionAction($id){
-	$view = FOSView::create();  
-    if($this->get('request')->getMethod() == "POST"){
+    public function addInteractionAction($id){
+        $view = FOSView::create();
 
-        $idInteraction = $this->get('request')->request->get('idInteraction');
-        
-        $em = $this->getDoctrine()->getManager();
+        if($this->get('request')->getMethod() == "POST"){
+            $idInteraction = $this->get('request')->get('idInteraction');
+            $em = $this->getDoctrine()->getManager();
 
-        $repoInteractions = $em->getRepository('ByExampleDemoBundle:Interactions');
-        $repoTypeInter =  $em->getRepository('ByExampleDemoBundle:Typeinteraction');
-        $ecoute=$em->getRepository('ByExampleDemoBundle:Ecoute')->findLastEcouteByUser($id);
-        $typeInter=$repoTypeInter->find($idInteraction);
-        
-        if($ecoute && $typeInter){ //si les deux existent
-        	$interaction = $repoInteractions->addInteraction($typeInter, $ecoute);
-        	$view->setStatusCode(200)->setData($interaction);
-        }else{ //l'item n'existe pas
-        	$view->setStatusCode(404)->setData($problem);
+            $repoInteractions = $em->getRepository('ByExampleDemoBundle:Interactions');
+            $repoTypeInter =  $em->getRepository('ByExampleDemoBundle:Typeinteraction');
+            $repoEcoute = $em->getRepository('ByExampleDemoBundle:Ecoute');
+            $ecoute = $repoEcoute->findLastEcouteByUser($id);
+            $typeInter = $repoTypeInter->find($idInteraction);
+            
+            if($ecoute && $typeInter){ //si les deux existent
+            	$interaction = $repoInteractions->addInteraction($typeInter, $ecoute);
+            	$view->setStatusCode(200)->setData($interaction);
+            } else { //l'item n'existe pas
+            	$view->setStatusCode(404);
+            }
+
+            return $view;
         }
-
-        return $view;
-
-     
-}
-}
+    }
 }

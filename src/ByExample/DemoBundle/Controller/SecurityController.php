@@ -85,7 +85,7 @@ class SecurityController extends Controller
           'email' => $user->getEmail(), 
           'id' => $user->getId(), 
           'username' => $user->getUsername(), 
-          // 'role' => $user->getRoles()
+          'role' => $user->getRoles()
         );
 
         if($utilisateur) {
