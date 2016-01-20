@@ -32,12 +32,11 @@ use Doctrine\ORM\Query;
 use Doctrine\Common\Util\Debug;
 use Symfony\Component\HttpFoundation\Session\Session;
 use \DateTime;
-use Madcoda\Youtube;
 
 /**
  *
  * @Route("/api/items")
- *@NamePrefix("byexample_items_")
+ * @NamePrefix("byexample_items_")
  */
 
 class ItemRestController extends Controller
@@ -299,9 +298,6 @@ class ItemRestController extends Controller
        curl_close($ch);
 
       $new = $repoGenre->addGenre($artist, $infodecode["response"]);
-         
-
-     
 
      if ($new) {
             $view->setStatusCode(200)->setData($new);
@@ -421,128 +417,7 @@ class ItemRestController extends Controller
 
             return $view;
           }
-   
-
-    /**
-  * Recherche des items dans la base en fonction du mot clé donné en paramètre
-  * @Route("/items/grooveshark/search/{key}")
-  * @Method({"GET"})
-  * @ApiDoc()
-  */
-    public function searchItemGroovesharkAction($key){
-      $view = FOSView::create();
-      $api_key=$this->container->getParameter('api_key');
-      $api_key_last=$this->container->getParameter('api_key_last');
-      $array=[];
-      $params = array("track" => $key, "api_key" => $api_key_last, "format" => "json", "limit" => "30");
-      
-       $url="http://ws.audioscrobbler.com/2.0/?method=track.search";
-
-       $url .= '&' . http_build_query($params);
-      
-
-       $ch = curl_init();
-       curl_setopt ($ch, CURLOPT_HTTPHEADER, array ('Accept: application/json'));
-       curl_setopt($ch, CURLOPT_URL, $url );
-       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-       $info=curl_exec($ch);
-       $infodecode = json_decode($info, true);
-       if($infodecode){
-        foreach($infodecode["results"]["trackmatches"]["track"] as $track){
-          $url="http://api.rhapsody.com/v1/search/typeahead";
-          $params = array("q" => $track["name"], "type" => "track");
-                $url .= "?". http_build_query($params);
-
-                $ch = curl_init();
-                curl_setopt ($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'apikey:'.$api_key));
-                curl_setopt($ch, CURLOPT_URL, $url );
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                $info=curl_exec($ch);
-                $infodecode2 = json_decode($info, true);
-                foreach($infodecode2 as $songRhapsody){
-                  if($songRhapsody["artist"]["name"]==$track["artist"]){
-                    array_push($array,$songRhapsody);
-                  }
-                
-                
-                }
-        }
-       }
-       /*if($infodecode){
-        foreach($infodecode["response"]["songs"] as $song){
-          if($song["tracks"][0]["foreign_id"]){
-            $result=explode(":", $song["tracks"][0]["foreign_id"]);
-            $id_rhapso = $result[2];
-            //$params = array("" => $key, "type" => "track");
-
-              $url="http://api.rhapsody.com/v1/tracks/".$id_rhapso;
-
-              //$url .= "?". http_build_query($params);
-
-
-              $ch = curl_init();
-              curl_setopt ($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'apikey:'.$api_key));
-              curl_setopt($ch, CURLOPT_URL, $url );
-              curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-              $info=curl_exec($ch);
-              $songs = json_decode($info, true);
-              if($songs["code"]){
-                $url="http://api.rhapsody.com/v1/search/typeahead";
-                $params = array("q" => $song["title"], "type" => "track");
-                $url .= "?". http_build_query($params);
-
-                $ch = curl_init();
-                curl_setopt ($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'apikey:'.$api_key));
-                curl_setopt($ch, CURLOPT_URL, $url );
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                $info=curl_exec($ch);
-                $infodecode2 = json_decode($info, true);
-                foreach($infodecode2 as $songRhapsody){
-                  if($songRhapsody["artist"]["name"]==$song["artist_name"]){
-                    array_push($array,$songRhapsody);
-                  }
-                
-                
-                }
-              }
-              else{
-                  //$songs=$infodecode;
-                  array_push($array, $songs);
-                }
-
-              
-            }
-        }
-        //$result=explode(":",$infodecode["response"]["songs"][0]["tracks"][0]["foreign_id"]);
-        //$id_rhapso=
-       }
-
-      /*$params = array("q" => $key, "type" => "track");
-
-            $url="http://api.rhapsody.com/v1/search/typeahead";
-
-            $url .= "?". http_build_query($params);
-
-
-            $ch = curl_init();
-            curl_setopt ($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'apikey:'.$api_key));
-            curl_setopt($ch, CURLOPT_URL, $url );
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $info=curl_exec($ch);
-            $infodecode = json_decode($info, true);*/
-
-       if($array){
-        $view->setStatusCode(200)->setData($array);
-      }
-      else{
-        $view->setStatusCode(404);
-      }
-
-      return $view;
-    }
   
-
-
     /**
     * Insère titre / album et artiste sommairement
     * @Post("items")
@@ -573,128 +448,4 @@ class ItemRestController extends Controller
 
       return $view; 
     }
-
-
-     /**
-      * Recherche un item sur xbox
-      * @Get("items/xbox/search")
-      * @ApiDoc()
-      */
-      public function getSearchXboxAction(){
-        $view = FOSView::create();
-        $em =$this->getDoctrine()->getManager();
-        $MusicAPI = new Xboxmusic;
-        $token = $MusicAPI->auth();
-        $json_response = $MusicAPI->search("rihanna", $token);
-        $response = json_decode($json_response, true);
-        
-        if ($response) {
-                $view->setStatusCode(200)->setData($response);
-            } else {
-                $view->setStatusCode(404);
-            }
-
-            return $view;
-          }
-
-             
-
-      /**
-      * Streaming xbox
-      * @Route("/items/xbox/streaming")
-      * @Method({"GET"})
-      * @ApiDoc()
-      */
-      public function getXboxAction(){
-        $view = FOSView::create();
-        $em =$this->getDoctrine()->getManager();
-        $MusicAPI = new Xboxmusic;
-        $token = $MusicAPI->auth();
-        $json_response=$MusicAPI->authenticateuser($token);
-      //$json_response = $MusicAPI->streaming("music.E2F10200-0200-11DB-89CA-0019B92A3933", $token);
-        //$response = json_decode($json_response, true);
-        
-        if ($json_response) {
-                $view->setStatusCode(200)->setData($json_response);
-            } else {
-                $view->setStatusCode(404);
-            }
-
-            return $view;
-          }
-   
-
-   /**
-      * Authorization code xbox
-      * @Route("/items/xbox/streaming")
-      * @Method({"POST"})
-      * @ApiDoc()
-      */
-      public function postXboxAuthorizationAction(){
-        $view = FOSView::create();
-        $em =$this->getDoctrine()->getManager();
-        $code = $this->getRequest()->request->get('code');
-        $MusicAPI = new Xboxmusic;
-        $token = $MusicAPI->auth();
-        $json_response=$MusicAPI->gettoken($code);
-        $access=json_decode($json_response, true)["access_token"];
-
-        $json2=$MusicAPI->xboxlive($access);
-        $xasu = json_decode($json2, true)["Token"];
-        $json2 = $MusicAPI->getXSTS($xasu);
-        $xsts=json_decode($json2,true);
-        $xtoken=$xsts["Token"];
-        $uhs = $xsts["DisplayClaims"]["xui"][0]["uhs"];
-        /*$json_response = $MusicAPI->streaming("music.A83EB907-0100-11DB-89CA-0019B92A3933", $token, $uhs, $xtoken);
-        $response = json_decode($json_response, true);
-        $url=$response["Url"];*/
-        $infos = array($uhs, $xtoken);
-        //$slaut = "ahdsd";
-        if ($infos) {
-                $view->setStatusCode(200)->setData($infos);
-            } else {
-                $view->setStatusCode(404);
-            }
-
-            return $view;
-          }
-
-          /**
-      * Streaming xbox
-      * @Route("/items/xbox/streaming/{iditem}")
-      * @Method({"GET"})
-      * @ApiDoc()
-      */
-      public function getXboxStreamingAction($iditem){
-        $view = FOSView::create();
-        $em =$this->getDoctrine()->getManager();
-        $request = $this->getRequest();
-        $xtoken = $request->query->get('xtoken');
-        $uhs =  $request->query->get('uhs');
-        
-        $MusicAPI = new Xboxmusic;
-        $token = $MusicAPI->auth();
-
-        $json_response = $MusicAPI->streaming("music.A83EB907-0100-11DB-89CA-0019B92A3933", $token, $uhs, $xtoken);
-        $response = json_decode($json_response, true);
-        $url=$response["Url"];
-        //$slaut = "ahdsd";
-        if ($url) {
-                $view->setStatusCode(200)->setData(array($url));
-            } else {
-                $view->setStatusCode(404);
-            }
-
-            return $view;
-          }
-
-
-
-
-
-
-
-
-
-
- }
+}

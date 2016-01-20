@@ -36,7 +36,6 @@
         "mopa/wsse-authentication-bundle": "dev-master",
         "nelmio/cors-bundle": "~1.3@dev",
 
-        "madcoda/php-youtube-api": "1.*",
         "google/apiclient": "^1.1"
     },
     "require-dev": {
