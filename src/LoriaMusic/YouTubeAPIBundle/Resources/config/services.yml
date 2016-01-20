@@ -1,0 +1,6 @@
+parameters:
+    youtube_api.youtube.class: LoriaMusic\YouTubeAPIBundle\Services\YouTubeService
+
+services:
+    youtube_api:
+        class: %youtube_api.youtube.class%

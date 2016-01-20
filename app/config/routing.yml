@@ -1,3 +1,7 @@
+loria_music_you_tube_api:
+    resource: "@LoriaMusicYouTubeAPIBundle/Resources/config/routing.yml"
+    prefix:   /
+
 by_example_recommandations:
     resource: "@ByExampleRecommandationsBundle/Resources/config/routing.yml"
     prefix:   /

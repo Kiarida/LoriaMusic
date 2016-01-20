@@ -1,0 +1,3 @@
+loria_music_you_tube_api_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: LoriaMusicYouTubeAPIBundle:Default:index }

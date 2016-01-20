@@ -21,11 +21,13 @@ class ItemRepository extends EntityRepository
 	public function findItemsBySearchKey($key){
         $key = "%".$key."%";
 
-		$query = $this->_em->createQuery('SELECT partial i.{id,url,titre,note,duree,typeitem,nbvues,date,urlCover,urlPoster}, partial a.{id,nom}, partial alb.{id,titre}
+		$query = $this->_em->createQuery('SELECT partial i.{id,url,titre,YouTubeVideoId,note,duree,typeitem,nbvues,date,urlCover,urlPoster}, partial a.{id,nom}, partial alb.{id,titre}
                                             FROM ByExampleDemoBundle:Item i LEFT JOIN i.idartiste a LEFT JOIN i.idalbum alb
                                             WHERE i.titre LIKE :key')
         ->setParameter('key', $key);
+
         $items = $query->getResult(Query::HYDRATE_ARRAY);
+
         return $items;
 	}
 
@@ -160,12 +162,15 @@ class ItemRepository extends EntityRepository
         public function addItemArtiste($url, $titre, $nomAlbum, $nom, $duration){
             $repository = $this->_em->getRepository('ByExampleDemoBundle:Item');
             $repoArtiste = $this->_em->getRepository('ByExampleDemoBundle:Artiste');
+            
             $singer=$repoArtiste->findOneByNom($nom);
+            
             //Si l'artiste existe déjà, on va regarder si l'item existe déjà
             if($singer){
                 $idArtiste=$singer->getId();
                  $vue = $repository->findItemByArtistandName($titre, $idArtiste);
                  $alb = $repository->findAlbumByArtistandName($nomAlbum, $idArtiste);
+                 
                  if($vue){
                     //Si l'item existe déjà, on va le retourner
                     return $vue;

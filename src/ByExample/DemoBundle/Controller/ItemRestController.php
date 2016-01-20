@@ -32,6 +32,7 @@ use Doctrine\ORM\Query;
 use Doctrine\Common\Util\Debug;
 use Symfony\Component\HttpFoundation\Session\Session;
 use \DateTime;
+use Madcoda\Youtube;
 
 /**
  *
@@ -69,18 +70,40 @@ class ItemRestController extends Controller
   * @ApiDoc()
   */
   public function getItemsSearchAction($key){
-      $view = FOSView::create();
-      $em = $this->getDoctrine()->getManager();
-      $repo = $em->getRepository('ByExampleDemoBundle:Item');
-      $items = $repo->findItemsBySearchKey($key);
+    $view = FOSView::create();
 
-        if ($items) {
-                $view->setStatusCode(200)->setData($items);
-            } else {
-                $view->setStatusCode(404);
-            }
+    $em = $this->getDoctrine()->getManager();
+    
+    $repo = $em->getRepository('ByExampleDemoBundle:Item');
+    $items = $repo->findItemsBySearchKey($key);
 
-      return $view;
+    $youtube = $this->container->get('youtube_api');
+
+    if ($items) {
+        foreach ($items as $key => $item) {
+            if (is_null($item['YouTubeVideoId'])) {
+                $itemToUpdate = $repo->findOneById($item['id']);
+                
+                $video = $youtube->searchVideo($itemToUpdate->getTitre().' '. $itemToUpdate->getIdArtiste()[0]->getNom());
+
+                $videoId = $youtube->getVideoId($video);
+                
+                //MAJ de l'item dans le tableau
+                $items[$key]['YouTubeVideoId'] = $videoId;
+
+                $itemToUpdate->setYouTubeVideoId($videoId);
+                $em->persist($itemToUpdate);
+            }          
+        }
+
+        $em->flush();
+        
+        $view->setStatusCode(200)->setData($items);
+    } else {
+        $view->setStatusCode(404);
+    }
+
+    return $view;
   }
 
 /**
@@ -527,14 +550,18 @@ class ItemRestController extends Controller
     */
     public function addItemArtisteAction(){
       $view = FOSView::create();
+      
       if($this->get('request')->getMethod() == "POST"){
         $em =$this->getDoctrine()->getManager();
+       
         $url = $this->getRequest()->request->get('url');
         $titre = $this->getRequest()->request->get('titre');
         $nomAlbum=$this->getRequest()->request->get('nomAlbum');
         $duration=$this->getRequest()->request->get('duration');
         $nom = $this->getRequest()->request->get('nom');
+       
         $repo = $em->getRepository('ByExampleDemoBundle:Item');
+       
         $success = $repo->addItemArtiste($url, $titre, $nomAlbum, $nom, $duration);
       }
       if($success){

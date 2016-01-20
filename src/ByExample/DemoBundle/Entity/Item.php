@@ -31,16 +31,16 @@ class Item
     /**
     * @var string
     *
-    * @ORM\Column(name="idLastFm", type="string", length=255, nullable=true)
+    * @ORM\Column(name="titre", type="string", length=255, nullable=false)
     */
-    private $idLastFm;
+    private $titre;
 
     /**
     * @var string
     *
-    * @ORM\Column(name="titre", type="string", length=255, nullable=false)
+    * @ORM\Column(name="YouTubeVideoId", type="string", length=255, nullable=true)
     */
-    private $titre;
+    private $YouTubeVideoId;
 
     /**
     * @var decimal
@@ -537,5 +537,63 @@ class Item
     public function getIdrecommandation()
     {
         return $this->idrecommandation;
+    }
+
+    /**
+     * Set youTubeVideoId
+     *
+     * @param string $youTubeVideoId
+     *
+     * @return Item
+     */
+    public function setYouTubeVideoId($youTubeVideoId)
+    {
+        $this->YouTubeVideoId = $youTubeVideoId;
+
+        return $this;
+    }
+
+    /**
+     * Get youTubeVideoId
+     *
+     * @return string
+     */
+    public function getYouTubeVideoId()
+    {
+        return $this->YouTubeVideoId;
+    }
+
+    /**
+     * Add iditemplaylist
+     *
+     * @param \ByExample\DemoBundle\Entity\PlaylistItem $iditemplaylist
+     *
+     * @return Item
+     */
+    public function addIditemplaylist(\ByExample\DemoBundle\Entity\PlaylistItem $iditemplaylist)
+    {
+        $this->iditemplaylist[] = $iditemplaylist;
+
+        return $this;
+    }
+
+    /**
+     * Remove iditemplaylist
+     *
+     * @param \ByExample\DemoBundle\Entity\PlaylistItem $iditemplaylist
+     */
+    public function removeIditemplaylist(\ByExample\DemoBundle\Entity\PlaylistItem $iditemplaylist)
+    {
+        $this->iditemplaylist->removeElement($iditemplaylist);
+    }
+
+    /**
+     * Get iditemplaylist
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIditemplaylist()
+    {
+        return $this->iditemplaylist;
     }
 }

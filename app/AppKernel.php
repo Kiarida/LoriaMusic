@@ -31,6 +31,7 @@ class AppKernel extends Kernel
             new Nelmio\CorsBundle\NelmioCorsBundle(),
             new ByExample\DemoBundle\ByExampleDemoBundle(),
             new ByExample\RecommandationsBundle\ByExampleRecommandationsBundle(),
+            new LoriaMusic\YouTubeAPIBundle\LoriaMusicYouTubeAPIBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

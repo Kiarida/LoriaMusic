@@ -52,14 +52,14 @@ class Artiste
     /**
      * @var string
      *
-     * @ORM\Column(name="urlCover", type="string", length=256, nullable=false)
+     * @ORM\Column(name="urlCover", type="string", length=256, nullable=true)
      */
     private $urlCover;
 
     /**
     * @var integer
     *
-    * @ORM\Column(name="idEcho", type="integer", nullable=false)
+    * @ORM\Column(name="idEcho", type="integer", nullable=true)
     */
     private $idecho;
 
