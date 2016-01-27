@@ -64,17 +64,17 @@ class ItemRestController extends Controller
 
   /**
   * Recherche des items dans la base en fonction du mot clé donné en paramètre
-  * @Route("/items/search/{key}")
+  * @Route("/items/search/{titre}/{nomArtiste}")
   * @Method({"GET"})
   * @ApiDoc()
   */
-  public function getItemsSearchAction($key){
+  public function getItemsSearchAction($titre, $nomArtiste){
     $view = FOSView::create();
 
     $em = $this->getDoctrine()->getManager();
     
     $repo = $em->getRepository('ByExampleDemoBundle:Item');
-    $items = $repo->findItemsBySearchKey($key);
+    $items = $repo->findItemsBySearchKey($titre, $nomArtiste);
 
     $youtube = $this->container->get('youtube_api');
 

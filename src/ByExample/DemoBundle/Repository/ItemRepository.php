@@ -18,13 +18,15 @@ use \DateTime;
  */
 class ItemRepository extends EntityRepository
 {
-	public function findItemsBySearchKey($key){
-        $key = "%".$key."%";
+	public function findItemsBySearchKey($titre, $nomArtiste){
+        $titre = "%".$titre."%";
+        $nomArtiste = "%".$nomArtiste."%";
 
 		$query = $this->_em->createQuery('SELECT partial i.{id,url,titre,YouTubeVideoId,note,duree,typeitem,nbvues,date,urlCover,urlPoster}, partial a.{id,nom}, partial alb.{id,titre}
                                             FROM ByExampleDemoBundle:Item i LEFT JOIN i.idartiste a LEFT JOIN i.idalbum alb
-                                            WHERE i.titre LIKE :key')
-        ->setParameter('key', $key);
+                                            WHERE i.titre LIKE :titre AND a.nom LIKE :nomArtiste')
+        ->setParameter('titre', $titre)
+        ->setParameter('nomArtiste', $nomArtiste);
 
         $items = $query->getResult(Query::HYDRATE_ARRAY);
 
