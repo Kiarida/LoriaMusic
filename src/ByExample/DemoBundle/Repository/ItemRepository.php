@@ -148,7 +148,7 @@ class ItemRepository extends EntityRepository
 		}
 
         public function findItemByArtistandName($titre, $idArtiste){
-            $query = $this->_em->createQuery("SELECT partial i.{id, url, titre, note, duree, date, urlCover}, partial alb.{id, titre}, partial a.{id, nom} FROM ByExampleDemoBundle:Item i JOIN i.idartiste a LEFT JOIN i.idalbum alb WHERE i.typeitem=1 AND a=:idartiste AND i.titre=:titre")->setParameter("idartiste", $idArtiste)->setParameter("titre", $titre);
+            $query = $this->_em->createQuery("SELECT partial i.{id, url, titre, YouTubeVideoId, note, duree, date, urlCover}, partial alb.{id, titre}, partial a.{id, nom} FROM ByExampleDemoBundle:Item i JOIN i.idartiste a LEFT JOIN i.idalbum alb WHERE i.typeitem=1 AND a=:idartiste AND i.titre=:titre")->setParameter("idartiste", $idArtiste)->setParameter("titre", $titre);
             $items=$query->getResult(Query::HYDRATE_ARRAY);
             return $items;
         }

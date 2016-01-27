@@ -425,7 +425,7 @@ class ItemRestController extends Controller
         $view = FOSView::create();
 
         if($this->get('request')->getMethod() == "POST"){
-            $em =$this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
 
             $url = $this->getRequest()->request->get('url');
             $titre = $this->getRequest()->request->get('titre');
@@ -436,6 +436,22 @@ class ItemRestController extends Controller
             $repo = $em->getRepository('ByExampleDemoBundle:Item');
 
             $success = $repo->addItemArtiste($url, $titre, $nomAlbum, $nom, $duration);
+            $success = $success[0];
+
+            // Check if youtube video id is present
+            if (is_null($success['YouTubeVideoId'])) {
+              $youtube = $this->container->get('youtube_api');
+              $video = $youtube->searchVideo($titre.' '. $nom);
+              $videoId = $youtube->getVideoId($video);
+
+              // MAJ de l'item dans le tableau
+              $success['YouTubeVideoId'] = $videoId;
+
+              $item = $repo->findOneById($success['id']);
+              $item->setYouTubeVideoId($success['YouTubeVideoId']);
+              $em->persist($item);
+              $em->flush();
+            }
         }
         
         if($success){
