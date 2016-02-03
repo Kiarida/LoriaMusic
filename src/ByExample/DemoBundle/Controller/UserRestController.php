@@ -235,7 +235,7 @@ class UserRestController extends Controller
             $utilisateur->setId($user->getId());
             $utilisateur->setDateinscription(new \DateTime());
             $utilisateur->setBirthdate(new \DateTime($request->get('birthyear')."/".$request->get('birthmonth')."/".$request->get('birthday')));
-            $utilisateur->setGenre($request->get('genre'));
+            $utilisateur->setGenre($request->get('genre_'));
             $utilisateur->setPays($request->get('country'));
             $em = $this->getDoctrine()->getManager();
             $em->persist($utilisateur);
